@@ -1,0 +1,159 @@
+<!--
+ * @fileoverview アプリケーション UI
+ * @author       Uz
+ * @version      0.0.1
+-->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <title>Bridge Terminal</title>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./style.css" type="text/css" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+
+  <!-- tabulator -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/3.5.3/css/tabulator.min.css" rel="stylesheet">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/3.5.3/js/tabulator.min.js"></script>
+
+  <!-- Others -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
+  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript" src="/app.js"></script>
+
+
+  <style>
+  body {
+      position: relative; 
+  }
+  #section_howto         {padding-top:30px;/*height:600px;*/color: #fff; background-color: #80AB00;}
+  #section_one           {padding-top:30px;/*height:600px;*/color: #fff; background-color: #80AB00;}
+  #section_many          {padding-top:30px;/*height:600px;*/color: #fff; background-color: #80AB00;}
+  </style>
+</head>
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">BT ボードゲーム貸し出し</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#section_howto">ボードゲームの借り方</a></li>
+        <li><a href="#section_one">一セットのみのボードゲーム</a></li>
+        <li><a href="#section_many">複数セットあるボードゲーム</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<!-- 説明 -->
+<div id="section_howto" class="container-fluid">
+<section>
+  <h1>ボードゲームの借り方</h1>
+
+  <ul>
+    <li>持ち出しの最長期間は「　2 週間　」です。</li>
+    <li>1 度に借りられるセットは「　2 セットまで　」です。</li>
+    <li>借りる際は「<b>　Global ID、email を記入して　</b>」左の x マークをクリックしてください。　　「　貸し出し日　」、「　返却期限　」、「　残日数　」が自動で表示されます。</li>
+    <li>返却する際は「<b>　Global ID、email を消して　</b>」左のチェックマークをクリックしてください。　　記入がクリアされます。</li>
+  </ul>
+
+</section>
+<br/>
+</div>
+
+
+<!-- 一セットのみのボードゲーム -->
+<div id="section_one" class="container-fluid">
+<section>
+  <h1>一セットのみのボードゲーム</h1>
+
+  <div id="tabulator-table-one"></div>
+
+</section>
+<br/>
+</div>
+
+
+<!-- 複数セットあるボードゲーム -->
+<div id="section_many" class="container-fluid">
+<section>
+  <h1>複数セットあるボードゲーム</h1>
+
+  <p>複数セットあるボードゲームは今のところ、ございません。</p>
+<!--
+  <div id="tabulator-table-many"></div>
+-->
+
+</section>
+<br/>
+</div>
+
+
+<!-- Footer -->
+<footer class="text-center">
+  <a class="up-arrow" href="#" data-toggle="tooltip" title="TO TOP">
+    <span class="glyphicon glyphicon-chevron-up"></span>
+  </a><br><br>
+  <p>BT Books Made By <a href="#" data-toggle="tooltip" title="Visit uzeeze">www.uzeeze.com</a></p> 
+</footer>
+
+<script>
+$(document).ready(function(){
+  // Initialize Tooltip
+  $('[data-toggle="tooltip"]').tooltip(); 
+
+  // Add smooth scrolling to all links in navbar + footer link
+  $(".navbar a, footer a[href='#']").on('click', function(event) {
+
+    // Make sure this.hash has a value before overriding default behavior
+    if (this.hash !== "") {
+
+      // Prevent default anchor click behavior
+      event.preventDefault();
+
+      // Store hash
+      var hash = this.hash;
+
+      // Using jQuery's animate() method to add smooth page scroll
+      // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+      $('html, body').animate({
+        scrollTop: $(hash).offset().top
+      }, 900, function(){
+
+        // Add hash (#) to URL when done scrolling (default click behavior)
+        window.location.hash = hash;
+      });
+    } // End if
+  });
+})
+</script>
+</body>
+</html>
+
+
